@@ -1,7 +1,0 @@
-mountpoints:
-  /:
-    url: "https://author-p181604-e1961839.adobeaemcloud.com//bin/franklin.delivery/adobe-commerce/frescopa/main"
-    type: "markup"
-    suffix: ".html"
-folders:
-  /products/: /products/default
