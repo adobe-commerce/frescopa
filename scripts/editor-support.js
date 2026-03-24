@@ -13,7 +13,7 @@ import { decorateMain } from './scripts.js';
 
 window.xwalk = window.xwalk || {};
 window.xwalk.isAuthorEnv = true;
-window.xwalk.previewSku = 'L050-TWILIGHT-BLISS';
+window.xwalk.previewSku = 'ADMIN-1-COMPOSTABLE-CUPS';
 
 async function applyChanges(event) {
   // redecorate default content and blocks on patches (in the properties rail)
