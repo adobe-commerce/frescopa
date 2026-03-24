@@ -22,7 +22,7 @@ import ProductGallery from '@dropins/storefront-pdp/containers/ProductGallery.js
 
 // Libs
 import { fetchPlaceholders, setJsonLd, getProductLink } from '../../scripts/commerce.js';
-import renderDescriptionAccordion from './description-accordion.js';
+import renderDescriptionModal from './description-modal.js';
 
 // Initializers
 import '../../scripts/initializers/cart.js';
@@ -210,10 +210,10 @@ export default async function decorate(block) {
       },
     })($addToWishlist),
 
-    // Description (lazy-rendered in accordion on expand)
+    // Description (lazy-rendered in modal on open)
     (() => {
-      renderDescriptionAccordion($description, {
-        title: labels.PDP?.Product?.Description?.label ?? 'Description',
+      renderDescriptionModal($description, {
+        title: labels.PDP?.Product?.Description?.label ?? 'More details',
         visible: Boolean(product?.description),
         renderContent: (el) => pdpRendered.render(ProductDescription, {})(el),
       });
