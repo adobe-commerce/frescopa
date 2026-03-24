@@ -62,7 +62,7 @@
               "name": "Columns",
               "value": "columns"
             }
-            
+
           ]
         }
       ]
@@ -95,7 +95,8 @@
         "reward",
         "reward-sticky",
         "sticky-cta",
-        "quiz"
+        "quiz",
+        "commerce-mini-cart"
       ]
     }
   ]
