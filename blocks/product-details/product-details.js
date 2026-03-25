@@ -53,7 +53,6 @@ export default async function decorate(block) {
           </div>
         </div>
         <div class="product-details__description"></div>
-        <div class="product-details__attributes"></div>
       </div>
     </div>
   `);
@@ -69,7 +68,6 @@ export default async function decorate(block) {
   const $addToCart = fragment.querySelector('.product-details__buttons__add-to-cart');
   const $addToWishlist = fragment.querySelector('.product-details__buttons__add-to-wishlist');
   const $description = fragment.querySelector('.product-details__description');
-  const $attributes = fragment.querySelector('.product-details__attributes');
 
   block.appendChild(fragment);
 
@@ -88,7 +86,6 @@ export default async function decorate(block) {
     addToCart,
     addToWishlist,
     _description,
-    _attributes,
   ] = await Promise.all([
     // Gallery (Mobile)
     pdpRendered.render(ProductGallery, {
@@ -210,18 +207,32 @@ export default async function decorate(block) {
       },
     })($addToWishlist),
 
-    // Description (lazy-rendered in modal on open)
+    // Description + attributes (lazy-rendered in modal on open)
     (() => {
+      const hasDescription = Boolean(product?.description);
+      const hasAttributes = Boolean(product?.attributes?.length);
       renderDescriptionModal($description, {
-        title: labels.PDP?.Product?.Details?.label ?? 'More details',
-        visible: Boolean(product?.description),
-        renderContent: (el) => pdpRendered.render(ProductDescription, {})(el),
+        title: 'What\'s in the Bag?',
+        visible: hasDescription || hasAttributes,
+        renderContent: async (el) => {
+          const tasks = [];
+          if (hasDescription) {
+            const descHost = document.createElement('div');
+            descHost.className = 'product-details__description-modal__description';
+            el.appendChild(descHost);
+            tasks.push(pdpRendered.render(ProductDescription, {})(descHost));
+          }
+          if (hasAttributes) {
+            const attrHost = document.createElement('div');
+            attrHost.className = 'product-details__description-modal__attributes';
+            el.appendChild(attrHost);
+            tasks.push(pdpRendered.render(ProductAttributes, {})(attrHost));
+          }
+          await Promise.all(tasks);
+        },
       });
       return Promise.resolve(null);
     })(),
-
-    // Attributes
-    pdpRendered.render(ProductAttributes, {})($attributes),
   ]);
 
   // Lifecycle Events

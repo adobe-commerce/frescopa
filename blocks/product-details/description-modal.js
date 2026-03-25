@@ -1,4 +1,4 @@
-const CLOSE_SVG = `<svg class="product-details__description-modal__close-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="round"/></svg>`;
+const CLOSE_SVG = '<svg class="product-details__description-modal__close-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="round"/></svg>';
 
 const MODAL_ID = 'product-details-description-modal';
 
@@ -12,7 +12,8 @@ const MODAL_ID = 'product-details-description-modal';
  * @param {Object} options
  * @param {string} [options.title='More details'] - Modal title and trigger label
  * @param {boolean} [options.visible=true] - If false, container is hidden
- * @param {(el: HTMLElement) => Promise<void>} options.renderContent - Called on each open
+ * @param {(el: HTMLElement) => Promise<void>} options.renderContent - First open only; mount into
+ *   `el`.
  */
 export default function renderDescriptionModal(container, options = {}) {
   const {
