@@ -15,8 +15,8 @@ export const ALLOWED_FILTER_PARAMETERS = ['page', 'pageSize', 'sort', 'sortDirec
 const isMobile = window.matchMedia('only screen and (max-width: 900px)').matches;
 
 // Summit has 25 products per category, so just hack it to show all.
-const PAGE_SIZE_DESKTOP = 100;
-const PAGE_SIZE_MOBILE = 100;
+const PAGE_SIZE_DESKTOP = 150;
+const PAGE_SIZE_MOBILE = 150;
 const DEFAULT_PARAMS = {
   basePageSize: isMobile ? PAGE_SIZE_MOBILE : PAGE_SIZE_DESKTOP,
   page: 1,
