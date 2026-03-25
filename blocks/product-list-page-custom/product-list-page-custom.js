@@ -14,14 +14,15 @@ const html = htm.bind(h);
 export const ALLOWED_FILTER_PARAMETERS = ['page', 'pageSize', 'sort', 'sortDirection', 'q', 'price', 'size', 'color_family', 'activity', 'color', 'gender', 'categories'];
 const isMobile = window.matchMedia('only screen and (max-width: 900px)').matches;
 
-const PAGE_SIZE_DESKTOP = 12;
-const PAGE_SIZE_MOBILE = 6;
+// Summit has 25 products per category, so just hack it to show all.
+const PAGE_SIZE_DESKTOP = 100;
+const PAGE_SIZE_MOBILE = 100;
 const DEFAULT_PARAMS = {
   basePageSize: isMobile ? PAGE_SIZE_MOBILE : PAGE_SIZE_DESKTOP,
   page: 1,
   pageSize: isMobile ? PAGE_SIZE_MOBILE : PAGE_SIZE_DESKTOP,
-  sort: 'position',
-  sortDirection: 'asc',
+  sort: 'name',
+  sortDirection: 'des',
 };
 
 export const productSearchQuery = (addCategory = false) => `query ProductSearch(
@@ -329,7 +330,7 @@ class ProductListPage extends Component {
     if (type === 'category') {
       headline = document.querySelector('.default-content-wrapper > h1')?.innerText;
       sort = 'position';
-      sortDirection = 'asc';
+      sortDirection = 'desc';
     }
 
     if (type === 'search') {
