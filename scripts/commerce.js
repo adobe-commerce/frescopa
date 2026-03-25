@@ -8,67 +8,69 @@ import {
 } from './configs.js';
 import { getConsent } from './scripts.js';
 
-/**
- * Gets placeholders object.
- * @param {string} [prefix] Location of placeholders
- * @returns {object} Window placeholders object
- */
-// eslint-disable-next-line import/prefer-default-export
-export async function fetchPlaceholders(prefix = 'default') {
-  const overrides = getMetadata('placeholders') || getRootPath().replace(/\/$/, '/placeholders.json') || '';
-  const [fallback, override] = overrides.split('\n');
-  window.placeholders = window.placeholders || {};
+/** @type {Promise<Record<string, unknown>>|null} */
+let placeholdersPromise = null;
 
-  if (!window.placeholders[prefix]) {
-    window.placeholders[prefix] = new Promise((resolve) => {
-      const url = fallback || `${prefix === 'default' ? '' : prefix}/placeholders.json`;
-      Promise.all([fetch(url), override ? fetch(override) : Promise.resolve()])
-        // get json from sources
-        .then(async ([resp, oResp]) => {
-          if (resp.ok) {
-            if (oResp?.ok) {
-              return Promise.all([resp.json(), await oResp.json()]);
-            }
-            return Promise.all([resp.json(), {}]);
-          }
-          return [{}];
-        })
-        // process json from sources
-        .then(([json, oJson]) => {
-          const placeholders = {};
+function placeholderRowsFromJson(json) {
+  if (!json || typeof json !== 'object') return [];
+  if (Array.isArray(json.data)) return json.data;
+  if (Array.isArray(json.data?.data)) return json.data.data;
+  return [];
+}
 
-          const allKeys = new Set([
-            ...(json.data?.map(({ Key }) => Key) || []),
-            ...(oJson?.data?.map(({ Key }) => Key) || []),
-          ]);
-
-          allKeys.forEach((Key) => {
-            if (!Key) return;
-            const keys = Key.split('.');
-            const originalValue = json.data?.find((item) => item.Key === Key)?.Value;
-            const overrideValue = oJson?.data?.find((item) => item.Key === Key)?.Value;
-            const finalValue = overrideValue ?? originalValue;
-            const lastKey = keys.pop();
-            const target = keys.reduce((obj, key) => {
-              obj[key] = obj[key] || {};
-              return obj[key];
-            }, placeholders);
-            target[lastKey] = finalValue;
-          });
-
-          window.placeholders[prefix] = placeholders;
-          resolve(placeholders);
-        })
-        .catch((error) => {
-          // eslint-disable-next-line no-console
-          console.error('error loading placeholders', error);
-          // error loading placeholders
-          window.placeholders[prefix] = {};
-          resolve(window.placeholders[prefix]);
-        });
+function buildNestedPlaceholders(rows) {
+  const tree = {};
+  rows.forEach((row) => {
+    const { Key } = row;
+    const text = row.Text ?? row.Value;
+    if (!Key || text === undefined) return;
+    const parts = Key.split('.');
+    const last = parts.pop();
+    let node = tree;
+    parts.forEach((segment) => {
+      node[segment] = node[segment] || {};
+      node = node[segment];
     });
+    node[last] = text;
+  });
+  return tree;
+}
+
+/**
+ * Loads `/placeholders.json` once (browser cache helps when the file is preloaded).
+ * Expects `{ data: [{ Key, Text }] }` (or `Text` under `data.data` for multi-sheet).
+ * Each dot-separated Key becomes nested objects, e.g.
+ * `PDP.Product.Incrementer.label` + Text → `{ PDP: { Product: { Incrementer: { label: '…' } } } }`.
+ * Rows may use `Value` instead of `Text`; that is accepted as a fallback.
+ *
+ * @returns {Promise<Record<string, unknown>>}
+ */
+export async function fetchPlaceholders() {
+  if (!placeholdersPromise) {
+    placeholdersPromise = (async () => {
+      const url = `${getRootPath().replace(/\/$/, '')}/placeholders.json`;
+      try {
+        const response = await fetch(url);
+        if (!response.ok) {
+          // eslint-disable-next-line no-console
+          console.warn('placeholders.json fetch failed:', response.status, response.statusText);
+          window.placeholders = {};
+          return window.placeholders;
+        }
+        const json = await response.json();
+        const rows = placeholderRowsFromJson(json);
+        const nested = buildNestedPlaceholders(rows);
+        window.placeholders = nested;
+        return nested;
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error('placeholders.json', error);
+        window.placeholders = {};
+        return window.placeholders;
+      }
+    })();
   }
-  return window.placeholders[`${prefix}`];
+  return placeholdersPromise;
 }
 
 /* Common query fragments */

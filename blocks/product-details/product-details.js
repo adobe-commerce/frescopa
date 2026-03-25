@@ -135,7 +135,7 @@ export default async function decorate(block) {
         try {
           addToCart.setProps((prev) => ({
             ...prev,
-            children: labels.Custom?.AddingToCart?.label,
+            children: labels.Global?.AddingToCart,
             disabled: true,
           }));
 
@@ -183,13 +183,13 @@ export default async function decorate(block) {
     UI.render(Button, {
       icon: Icon({ source: 'Heart' }),
       variant: 'secondary',
-      'aria-label': labels.Custom?.AddToWishlist?.label,
+      'aria-label': labels.Global?.CartMoveToWishlist,
       onClick: async () => {
         try {
           addToWishlist.setProps((prev) => ({
             ...prev,
             disabled: true,
-            'aria-label': labels.Custom?.AddingToWishlist?.label,
+            'aria-label': labels.Wishlist?.Wishlist?.loading,
           }));
 
           const values = pdpApi.getProductConfigurationValues();
@@ -204,7 +204,7 @@ export default async function decorate(block) {
           addToWishlist.setProps((prev) => ({
             ...prev,
             disabled: false,
-            'aria-label': labels.Custom?.AddToWishlist?.label,
+            'aria-label': labels.Global?.CartMoveToWishlist,
           }));
         }
       },
@@ -213,7 +213,7 @@ export default async function decorate(block) {
     // Description (lazy-rendered in modal on open)
     (() => {
       renderDescriptionModal($description, {
-        title: labels.PDP?.Product?.Description?.label ?? 'More details',
+        title: labels.PDP?.Product?.Details?.label ?? 'More details',
         visible: Boolean(product?.description),
         renderContent: (el) => pdpRendered.render(ProductDescription, {})(el),
       });
