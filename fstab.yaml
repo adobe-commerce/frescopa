@@ -1,7 +1,0 @@
-mountpoints:
-  /:
-    url: https://author-p186773-e1975122.adobeaemcloud.com/content/frescopa/en
-    type: markup
-
-folders:
-  /products/: /products/default
