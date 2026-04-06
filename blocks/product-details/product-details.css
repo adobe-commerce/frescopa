@@ -37,18 +37,49 @@
   margin-top: var(--spacing-medium);
 }
 
+/*
+ * PDP drop-in sets a fixed --height from image measurements; max-height alone caps the
+ * flex container but flex items keep min-height:auto, so content still paints past the
+ * box and overlaps the footer. Cap the subtree, min-height:0 so items can shrink, and
+ * overflow:hidden to clip paint. ResizeObserver then re-measures the smaller box.
+ */
+.product-details__gallery {
+  --pdp-gallery-max-h: min(65dvh, 75vh);
+}
+
 .product-details__gallery .pdp-carousel {
-  max-height: 60vh;
+  max-height: var(--pdp-gallery-max-h);
+  min-height: 0;
+  overflow: hidden;
+}
+
+.product-details__gallery .pdp-carousel > * {
+  min-height: 0;
+}
+
+.product-details__gallery .pdp-carousel__wrapper {
+  max-height: var(--pdp-gallery-max-h) !important;
+}
+
+.product-details__gallery .pdp-carousel__controls__container--thumbnailsColumn {
+  max-height: var(--pdp-gallery-max-h) !important;
 }
 
 .product-details__gallery .pdp-carousel--thumbnailsRow {
-  max-height: 80vh;
+  max-height: min(80dvh, 85vh);
 }
 
 .product-details__gallery .pdp-overlay__content .pdp-carousel,
-.product-details__gallery .pdp-overlay__content .pdp-carousel--thumbnailsRow
-{
-  max-height: unset;;
+.product-details__gallery .pdp-overlay__content .pdp-carousel--thumbnailsRow {
+  max-height: unset;
+  overflow: visible;
+}
+
+.product-details__gallery .pdp-overlay__content .pdp-carousel__wrapper,
+.product-details__gallery
+  .pdp-overlay__content
+  .pdp-carousel__controls__container--thumbnailsColumn {
+  max-height: unset !important;
 }
 
 

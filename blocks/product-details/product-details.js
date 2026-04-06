@@ -100,7 +100,7 @@ export default async function decorate(block) {
 
     // Gallery (Desktop)
     pdpRendered.render(ProductGallery, {
-      controls: 'thumbnailsRow',
+      controls: 'thumbnailsColumn',
       arrows: true,
       peak: true,
       gap: 'small',
