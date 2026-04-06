@@ -17,7 +17,6 @@ import ProductShortDescription from '@dropins/storefront-pdp/containers/ProductS
 import ProductOptions from '@dropins/storefront-pdp/containers/ProductOptions.js';
 import ProductQuantity from '@dropins/storefront-pdp/containers/ProductQuantity.js';
 import ProductDescription from '@dropins/storefront-pdp/containers/ProductDescription.js';
-import ProductAttributes from '@dropins/storefront-pdp/containers/ProductAttributes.js';
 import ProductGallery from '@dropins/storefront-pdp/containers/ProductGallery.js';
 
 // Libs
@@ -26,6 +25,7 @@ import renderDescriptionModal from './description-modal.js';
 
 // Initializers
 import '../../scripts/initializers/cart.js';
+import renderAttributes from './product-attributes.js';
 
 export default async function decorate(block) {
   // eslint-disable-next-line no-underscore-dangle
@@ -226,7 +226,7 @@ export default async function decorate(block) {
             const attrHost = document.createElement('div');
             attrHost.className = 'product-details__description-modal__attributes';
             el.appendChild(attrHost);
-            tasks.push(pdpRendered.render(ProductAttributes, {})(attrHost));
+            tasks.push(renderAttributes(attrHost, product.attributes));
           }
           await Promise.all(tasks);
         },
