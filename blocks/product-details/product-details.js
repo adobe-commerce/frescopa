@@ -91,7 +91,7 @@ export default async function decorate(block) {
   const $addToWishlist = fragment.querySelector('.product-details__buttons__add-to-wishlist');
   const $description = fragment.querySelector('.product-details__description');
 
-  block.appendChild(fragment);
+  block.replaceChildren(fragment);
 
   // Alert
   let inlineAlert = null;
