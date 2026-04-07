@@ -132,7 +132,9 @@ export default async function decorate(block) {
     })($gallery),
 
     // Header
-    pdpRendered.render(ProductHeader, {})($header),
+    pdpRendered.render(ProductHeader, {
+      hideSku: true,
+    })($header),
 
     // Price
     pdpRendered.render(ProductPrice, {})($price),
