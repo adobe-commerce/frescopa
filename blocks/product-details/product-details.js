@@ -27,9 +27,31 @@ import renderDescriptionModal from './description-modal.js';
 import '../../scripts/initializers/cart.js';
 import renderAttributes from './product-attributes.js';
 
+/**
+ * Checks if the page has prerendered product JSON-LD data
+ * @returns {boolean} True if product JSON-LD exists and contains @type=Product
+ */
+function isProductPrerendered() {
+  const jsonLdScript = document.querySelector('script[type="application/ld+json"]');
+
+  if (!jsonLdScript?.textContent) {
+    return false;
+  }
+
+  try {
+    const jsonLd = JSON.parse(jsonLdScript.textContent);
+    return jsonLd?.['@type'] === 'Product';
+  } catch (error) {
+    console.debug('Failed to parse JSON-LD:', error);
+    return false;
+  }
+}
+
 export default async function decorate(block) {
-  // eslint-disable-next-line no-underscore-dangle
-  const product = events._lastEvent?.['pdp/data']?.payload ?? null;
+  const eventProduct = events.lastPayload('pdp/data') ?? null;
+  // bug: the pdp sends an object with event data even if product is not found.
+  const product = eventProduct?.sku ? eventProduct : null;
+
   const labels = await fetchPlaceholders();
 
   // Layout
@@ -243,7 +265,8 @@ export default async function decorate(block) {
 
   // Set JSON-LD and Meta Tags
   events.on('aem/lcp', () => {
-    if (product) {
+    const isPrerendered = isProductPrerendered();
+    if (product && !isPrerendered) {
       setJsonLdProduct(product);
       setMetaTags(product);
       document.title = product.name;
