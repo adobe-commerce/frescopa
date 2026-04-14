@@ -345,13 +345,18 @@ async function loadLazy(doc) {
   const main = doc.querySelector('main');
   await loadSections(main);
 
-  const { hash } = window.location;
+  const { hash, pathname } = window.location;
   const element = hash ? doc.getElementById(hash.substring(1)) : false;
   if (hash && element) element.scrollIntoView();
 
+  const path = pathname.replace(/\/$/, '') || '/';
+  const skipHeaderFooter = path === '/brand-concierge';
+
   await Promise.all([
-    loadHeader(doc.querySelector('header')),
-    loadFooter(doc.querySelector('footer')),
+    ...(skipHeaderFooter ? [] : [
+      loadHeader(doc.querySelector('header')),
+      loadFooter(doc.querySelector('footer')),
+    ]),
     loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`),
     loadCSS(`${window.hlx.codeBasePath}/styles/article.css`),
     loadFonts(),
