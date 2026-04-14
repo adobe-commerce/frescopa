@@ -41,6 +41,9 @@
           "...": "../blocks/fragment/_*.json#/definitions"
         },
         {
+          "...": "../blocks/brand-concierge/_*.json#/definitions"
+        },
+        {
           "...": "../blocks/hero/_*.json#/definitions"
         },
         {
