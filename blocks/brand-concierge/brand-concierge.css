@@ -1,8 +1,36 @@
-/* Shell: full-height column so the concierge mount can fill the viewport. */
+/*
+ * Brand Concierge is often the only visible main content (header/footer hidden).
+ * Body grid rows (auto 1fr auto) can leave main in an auto-sized row when siblings
+ * are display:none, so main + section must establish their own min-height flex chain.
+ */
+main:has(> .section.brand-concierge-container) {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+main > .section.brand-concierge-container {
+  align-items: stretch;
+  box-sizing: border-box;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: stretch;
+  margin-top: 0;
+  margin-bottom: 0;
+  min-height: 0;
+  width: 100%;
+}
+
+/* Shell: grows with the page flex chain; min-height guards short content. */
 .block.brand-concierge {
   box-sizing: border-box;
   display: flex;
+  flex: 1 1 auto;
   flex-direction: column;
+  min-height: 100vh;
   min-height: 100dvh;
   width: 100%;
   justify-self: center;
@@ -36,7 +64,7 @@
   align-self: stretch;
   box-sizing: border-box;
   display: flex;
-  flex: 1 1 0;
+  flex: 1 1 auto;
   flex-direction: column;
   height: auto !important;
   margin: 0;
@@ -46,20 +74,73 @@
   width: 100%;
 }
 
+/* Adobe sets height:100% here; without a definite mount height that stays content-sized. */
+.block.brand-concierge #brand-concierge-mount .brand-concierge-flex-wrapper {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 0;
+  width: 100%;
+}
+
+/* Welcome state: fill the shell and vertically center heading, cards, input + disclaimer. */
+.block.brand-concierge #brand-concierge-mount .brand-concierge-container.initial-state {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.block.brand-concierge
+  #brand-concierge-mount
+  .brand-concierge-container.initial-state
+  > .chat-interface:not(.input-align-page-bottom) {
+  box-sizing: border-box;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: var(--chat-interface-content-gap, 24px);
+  justify-content: center;
+  margin-inline: auto;
+  max-width: 100%;
+  min-height: 0;
+  width: 100%;
+}
+
+/* Keep pinned-composer layout when authoring enables alignPageBottom. */
+.block.brand-concierge
+  #brand-concierge-mount
+  .brand-concierge-container.initial-state
+  > .chat-interface.input-align-page-bottom {
+  display: grid;
+}
+
+/* Disclaimer: normal flow under the composer so it centers with the welcome cluster. */
+.block.brand-concierge
+  #brand-concierge-mount
+  .brand-concierge-container.initial-state
+  .disclaimer-message.disclaimer-bottom-page {
+  flex-shrink: 0;
+  left: auto;
+  margin-bottom: var(--disclaimer-margin-bottom, 16px);
+  margin-top: var(--disclaimer-margin-top, 16px);
+  position: static;
+  transform: none;
+  width: 100%;
+}
+
 /* Extra inset so the sticky composer clears the home indicator (Adobe already uses position: sticky). */
 .block.brand-concierge #brand-concierge-mount .chat-interface.input-align-page-bottom .input-section-bottom-page {
   padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 
 main > div > .brand-concierge-wrapper {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
   margin: 0;
   max-width: none;
+  min-height: 0;
   padding: 0;
-}
-
-main > div.section.brand-concierge-container {
-  margin-top: 0;
-  margin-bottom: 0;
+  width: 100%;
 }
 
 .chat-message li {

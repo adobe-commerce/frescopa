@@ -16,7 +16,7 @@ const brandConciergeStyleConfiguration = {
       enableVoiceInput: false,
       disableMultiline: true,
       /** Pinned composer: adds `input-align-page-bottom` in the concierge UI (see Adobe main.js). */
-      alignPageBottom: true,
+      alignPageBottom: false,
       showAiChatIcon: {
         icon: 'test',
       },
