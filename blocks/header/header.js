@@ -238,6 +238,11 @@ export default async function decorate(block) {
 
   const navTools = nav.querySelector('.nav-tools');
 
+  const brandConciergeLink = document.createElement('a');
+  brandConciergeLink.className = 'nav-concierge-link';
+  brandConciergeLink.href = rootLink('/brand-concierge');
+  brandConciergeLink.setAttribute('aria-label', 'Brand Concierge');
+
   /** Mini Cart */
   const excludeMiniCartFromPaths = ['/checkout'];
 
@@ -248,7 +253,7 @@ export default async function decorate(block) {
      </div>
    `);
 
-  navTools.append(minicart);
+  navTools.append(brandConciergeLink, minicart);
 
   const minicartPanel = navTools.querySelector('.minicart-panel');
 

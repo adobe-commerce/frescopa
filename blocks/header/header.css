@@ -305,6 +305,27 @@ header nav .nav-tools-wrapper > button {
   width: 40px;
 }
 
+header nav .nav-tools a.nav-concierge-link {
+  background-image: url('../../icons/brand-concierge.svg');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 40px 40px;
+  border: unset;
+  box-sizing: border-box;
+  color: var(--color-brand-700);
+  cursor: pointer;
+  display: block;
+  height: 40px;
+  padding: 10px;
+  text-decoration: none;
+  width: 40px;
+}
+
+header nav .nav-tools a.nav-concierge-link:focus-visible {
+  outline: 2px solid var(--color-brand-700);
+  outline-offset: 2px;
+}
+
 header nav .nav-tools button.nav-cart-button {
   background-image: url('../../icons/cart.svg');
   background-repeat: no-repeat;
