@@ -352,11 +352,14 @@ async function loadLazy(doc) {
   const path = pathname.replace(/\/$/, '') || '/';
   const skipHeaderFooter = path === '/brand-concierge';
 
+  if (skipHeaderFooter) {
+    doc.querySelector('header')?.style.setProperty('display', 'none');
+    doc.querySelector('footer')?.style.setProperty('display', 'none');
+  }
+
   await Promise.all([
-    ...(skipHeaderFooter ? [] : [
-      loadHeader(doc.querySelector('header')),
-      loadFooter(doc.querySelector('footer')),
-    ]),
+    loadHeader(doc.querySelector('header')),
+    loadFooter(doc.querySelector('footer')),
     loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`),
     loadCSS(`${window.hlx.codeBasePath}/styles/article.css`),
     loadFonts(),

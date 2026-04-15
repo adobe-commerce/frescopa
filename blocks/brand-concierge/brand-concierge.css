@@ -1,1 +1,68 @@
-/* Brand concierge block styles (TBD). */
+/* Shell: full-height column so the concierge mount can fill the viewport. */
+.block.brand-concierge {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  width: 100%;
+  justify-self: center;
+}
+
+/* Site logo: fixed to the viewport top-left while the chat scrolls. */
+.block.brand-concierge .brand-concierge-logo-link {
+  left: max(1.2rem, env(safe-area-inset-left));
+  margin: 0;
+  position: fixed;
+  top: max(0.8rem, env(safe-area-inset-top));
+  z-index: 11002;
+}
+
+.block.brand-concierge .brand-concierge-logo-link:focus-visible {
+  outline: 2px solid currentcolor;
+  outline-offset: 4px;
+}
+
+.block.brand-concierge .frescopa-logo {
+  display: block;
+  height: auto;
+  max-height: 4.8rem;
+  max-width: 200px;
+  width: auto;
+}
+
+/* Mount fills remaining column; Adobe `alignPageBottom` keeps composer sticky at bottom. */
+.block.brand-concierge #brand-concierge-mount,
+.block.brand-concierge .personalization-container {
+  align-self: stretch;
+  box-sizing: border-box;
+  display: flex;
+  flex: 1 1 0;
+  flex-direction: column;
+  height: auto !important;
+  margin: 0;
+  max-width: none;
+  min-height: 0;
+  overflow: auto;
+  width: 100%;
+}
+
+/* Extra inset so the sticky composer clears the home indicator (Adobe already uses position: sticky). */
+.block.brand-concierge #brand-concierge-mount .chat-interface.input-align-page-bottom .input-section-bottom-page {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+main > div > .brand-concierge-wrapper {
+  margin: 0;
+  max-width: none;
+  padding: 0;
+}
+
+main > div.section.brand-concierge-container {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.chat-message li {
+  font-size: 18px;
+  color: var(--message-concierge-text);
+}
