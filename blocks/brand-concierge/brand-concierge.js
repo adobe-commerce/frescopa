@@ -111,7 +111,7 @@ const brandConciergeStyleConfiguration = {
   text: {
     'welcome.heading': 'Explore what you can do with Fréscopa.',
     'welcome.subheading': 'Choose an option or tell us what interests you and we\'ll point you in the right direction.',
-    'input.placeholder': 'Tell us what you\'d like to do or create',
+    'input.placeholder': 'Tell us what you\'re looking for today',
     'input.messageInput.aria': 'Message input',
     'input.send.aria': 'Send message',
     'input.aiChatIcon.tooltip': 'Ask AI',
