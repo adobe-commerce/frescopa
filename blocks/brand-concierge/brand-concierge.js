@@ -298,13 +298,13 @@ function getAlloyInitPromise() {
 
 export default async function decorate(block) {
   const logoLink = document.createElement('a');
-  logoLink.href = 'https://www.frescopacommerce.com';
+  logoLink.href = '/';
   logoLink.setAttribute('aria-label', 'Frescopa Commerce home');
   logoLink.className = 'brand-concierge-logo-link';
 
   const logo = document.createElement('img');
   logo.className = 'frescopa-logo';
-  logo.src = 'https://www.frescopacommerce.com/icons/frescopa_logo.svg';
+  logo.src = '/icons/frescopa_logo.svg';
   logo.alt = 'Frescopa Commerce';
   logoLink.append(logo);
 
