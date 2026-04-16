@@ -147,3 +147,7 @@ main > div > .brand-concierge-wrapper {
   font-size: 18px;
   color: var(--message-concierge-text);
 }
+
+.chat-history {
+  min-height: 0 !important;
+}
