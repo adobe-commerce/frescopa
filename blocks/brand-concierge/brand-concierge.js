@@ -244,7 +244,7 @@ const brandConciergeStyleConfiguration = {
 };
 
 const ALLOY_SRC = 'https://d37g5vf7fkpdn6.cloudfront.net/alloy.js';
-const CONCIERGE_MAIN_SRC = 'https://experience.adobe.net/solutions/experience-platform-brand-concierge-web-agent/static-assets/main.js';
+const CONCIERGE_MAIN_SRC = `/scripts/bc.js`;
 const ALLOY_INSTANCE = 'alloy';
 
 /**
