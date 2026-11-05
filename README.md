@@ -13,3 +13,7 @@ The code in this repo is based on an older version of adobe-rnd/aem-boilerplate-
 - Prerender Repo: https://github.com/vjdandu/prerender-frescopacommerce
 - [Prerender Deploy (staging)](https://developer.adobe.com/console/projects/1172492/4566206088345615860/workspaces/4566206088345650129/runtime/details) 
 - LLMO: https://llmo.now/frescopacommerce.com/overview
+
+## Login routing
+
+The login document is published at `/signup/login` and contains the `commerce-login` block. Use `CUSTOMER_LOGIN_PATH` from `scripts/constants.js` with `rootLink()` for login navigation, including logout redirects and checkout registration links. Other customer account and password-recovery paths remain under `/customer`.
