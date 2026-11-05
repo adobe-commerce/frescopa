@@ -13,3 +13,11 @@ The code in this repo is based on an older version of adobe-rnd/aem-boilerplate-
 - Prerender Repo: https://github.com/vjdandu/prerender-frescopacommerce
 - [Prerender Deploy (staging)](https://developer.adobe.com/console/projects/1172492/4566206088345615860/workspaces/4566206088345650129/runtime/details) 
 - LLMO: https://llmo.now/frescopacommerce.com/overview
+
+## Login authoring
+
+The `commerce-login` block already includes Universal Editor instrumentation and renders the Adobe Commerce authentication drop-in. It is available as **Account → Login** when adding a component to a section.
+
+After deploying the authoring configuration, open the existing login page in Universal Editor, select a section (or add one to the empty page), and add **Account → Login**. Preview the sign-in form, then publish the page; a code deployment alone does not add or publish AEM content.
+
+The section allowlist is maintained in `models/_section.json`. Run `npm run build:json` after editing authoring definitions, models, or filters, and commit the generated root `component-*.json` files. See [Creating Blocks Instrumented for use with the Universal Editor](https://www.aem.live/developer/universal-editor-blocks).
