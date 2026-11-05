@@ -13,3 +13,4 @@ The code in this repo is based on an older version of adobe-rnd/aem-boilerplate-
 - Prerender Repo: https://github.com/vjdandu/prerender-frescopacommerce
 - [Prerender Deploy (staging)](https://developer.adobe.com/console/projects/1172492/4566206088345615860/workspaces/4566206088345650129/runtime/details) 
 - LLMO: https://llmo.now/frescopacommerce.com/overview
+

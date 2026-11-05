@@ -81,7 +81,7 @@ import {
   setAddressOnCart,
 } from '../../scripts/checkout.js';
 
-import { authPrivacyPolicyConsentSlot, SUPPORT_PATH } from '../../scripts/constants.js';
+import { authPrivacyPolicyConsentSlot, CUSTOMER_LOGIN_PATH, SUPPORT_PATH } from '../../scripts/constants.js';
 import { rootLink } from '../../scripts/scripts.js';
 
 // Initializers
@@ -869,7 +869,7 @@ export default async function decorate(block) {
     }) => {
       const signUpForm = document.createElement('div');
       AuthProvider.render(SignUp, {
-        routeSignIn: () => rootLink('/customer/login'),
+        routeSignIn: () => rootLink(CUSTOMER_LOGIN_PATH),
         routeRedirectOnEmailConfirmationClose: () => rootLink('/customer/account'),
         inputsDefaultValueSet,
         addressesData,
